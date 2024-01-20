@@ -7,7 +7,7 @@ import numpy as np
 
 
 def download_img(url: str, path: str) -> None:
-    with open(path, 'wb') as handle:
+    with open(path, "wb") as handle:
         response = requests.get(url, stream=True)
         for block in response.iter_content(1024):
             if not block:
