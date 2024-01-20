@@ -15,6 +15,7 @@ def download_img(url: str, path: str) -> None:
 
             handle.write(block)
 
+
 def load_image_torch(path: str) -> np.ndarray:
     img = Image.open(path)
     img = TF.to_tensor(img).unsqueeze(0)
@@ -27,5 +28,10 @@ def preprocess_img(img: torch.Tensor, hw: int = 640, half: bool = True) -> torch
         img = img.half()
     return img
 
+
 def img_to_numpy(img: torch.Tensor) -> np.ndarray:
     return img.permute(1, 2, 0).numpy()
+
+
+def img_float_to_uint(img: np.ndarray):
+    return (255 * img).astype(np.uint8)
