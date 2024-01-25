@@ -22,12 +22,15 @@ class CastNumpy(torch.nn.Module):
         In the forward function we accept the inputs and cast them to a pytorch tensor
         """
 
-        image = np.ascontiguousarray(image)
-
         if self.to == "numpy":
+            if isinstance(image, torch.Tensor):
+                image = image.cpu().numpy()
+                return image
             return image
         elif self.to == "torch":
-            image = torch.from_numpy(image).to(self.device)
+            if isinstance(image, torch.Tensor):
+                return image
+            image = torch.from_numpy(image.astype(np.float32)).to(self.device)
 
         if image.ndimension() == 3:
             image = image.unsqueeze(0)
